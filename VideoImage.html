@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+</head>
+<body>
+ 
+     <video id="video" width="640" height="480" autoplay></video>
+    <button id="snap">Capture Photo</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+   <!-- <button id="snap" onclick="saveImage()">save The Image</button>
+    <a href="" download/> -->
+    <a href="#" onclick="saveImage(); return false">save the Image</a>&nbsp;
+
+    
+    <script>
+        var video = document.getElementById('video');
+        var path = "";
+
+        // Get access to the camera!
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Not adding `{ audio: true }` since we only want video now
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
+                //video.src = window.URL.createObjectURL(stream);
+                video.srcObject = stream;
+                video.play();
+            });
+        }
+
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+        var video = document.getElementById('video');
+
+        // Trigger photo take
+        document.getElementById("snap").addEventListener("click", function () {
+            context.drawImage(video, 0, 0, 640, 480);
+            //alert(context);
+        });
+
+
+        function saveImage() {
+            var image = new Image();
+            image.id = "pic"
+            image.src = context.canvas.toDataURL();
+
+            var link = document.createElement("a");
+
+            link.setAttribute("href", image.src);
+            path = image.src;
+            link.setAttribute("download", "capturedImage");
+            link.ask
+            link.click();
+            //a.click();
+            //alert(a);
+            }
+
+            /*  var button = document.getElementById('btn-download');
+              button.addEventListener('click', function (e) {
+                  var dataURL = canvas.toDataURL('image/png');
+                  button.href = dataURL; */
+        </script>
+        <asp:Button ID="BtnSave" runat="server" Text="Save" OnClick="BtnSave_Click" />
+    </form>
+   
+     </body>
+</html>
